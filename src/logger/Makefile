@@ -16,12 +16,12 @@ LD_OPTS    =
 INCLUDES   = -I$(HDR) -I../ -I../../hdr/ -I/util/include -I/util/X11/include
 LIBS       = -lm
 
-SRCS       = $(SRC)/sensor.c
+SRCS       = $(SRC)/logger.c
 
-OBJS       = $(OBJ)/sensor.o
+OBJS       = $(OBJ)/logger.o
 
 all: $(OBJS) $(SRCS) Makefile
-	ld $(LD_OPTS) -r -o $(LD_OBJ)/sensor.o $(OBJS)
+	ld $(LD_OPTS) -r -o $(LD_OBJ)/logger.o $(OBJS)
 
 $(OBJ)/%.o:$(SRC)/%.c
 	${CC} ${CFLAGS} $(INCLUDES) -c $(SRC)/${*F}.c -o $(OBJ)/${*F}.o

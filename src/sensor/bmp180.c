@@ -4,14 +4,12 @@
 #include "bmp180.h"
 
 #define OSS BMP180_STANDARD
-short AC1,AC2,AC3,B1,B2,MB,MC,MD;
-unsigned short AC4,AC5,AC6;
 
 char I2C_readByte(char reg)
-{	
-	char buf[] = {reg}; 
+{
+	char buf[] = {reg};
 	bcm2835_i2c_read_register_rs(buf,buf,1);
-	return buf[0];	
+	return buf[0];
 }
 unsigned short I2C_readU16(char reg)
 {
@@ -90,7 +88,7 @@ float read_temperature()
   	T = ((B5 + 8) >> 4) /10.0;
 	return T;
 }
-      
+
 int read_pressure()
 {
 	int P;
@@ -99,11 +97,11 @@ int read_pressure()
 	int B7;
 	UT = read_raw_temp();
 	UP = read_raw_pressure();
-	
+
 	X1 = ((UT - AC6)*AC5) >> 15;
  	X2 = (MC << 11) / (X1 + MD);
 	B5 = X1 + X2;
-	
+
 	//Pressure Calculations
 	B6 = B5 - 4000;
 	X1 = (B2 * (B6 * B6) >> 12) >> 11;
@@ -140,21 +138,3 @@ float read_sealevel_pressure()
 	p0 = pressure / pow(1.0 - altitude_m/44330.0,5.255);
 	return p0;
 }
-int main(int argc,char **argv)
-{
-	printf("BMP180 Test Program ...\n");
-	if(!bcm2835_init()) return 1;
-	bcm2835_i2c_begin();
-	bcm2835_i2c_setSlaveAddress(BMP180_Address);
-	bcm2835_i2c_set_baudrate(10000);
-	load_calibration();
-	while(1)
-	{
-		printf("\nTemperature : %.2f C\n",read_temperature());
-		printf("Pressure :    %.2f Pa\n",read_pressure()/100.0);
-	 	printf("Altitude :    %.2f h\n",read_altitude());
-		bcm2835_delay(1000);
-	}
-	return 0;		
-}
-
