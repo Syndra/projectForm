@@ -5,10 +5,10 @@
 #define BMP180_Address 0x77
 
 //Operating Modes
-#define BMP180_ULTRALOWPOWER    0 
-#define BMP180_STANDARD         1 
-#define BMP180_HIGHRES          2 
-#define BMP180_ULTRAHIGHRES     3 
+#define BMP180_ULTRALOWPOWER    0
+#define BMP180_STANDARD         1
+#define BMP180_HIGHRES          2
+#define BMP180_ULTRAHIGHRES     3
 
 //BMP185 Registers
 #define BMP180_CAL_AC1          0xAA  //Calibration data (16 bits)
@@ -31,4 +31,3 @@
 #define BMP180_READPRESSURECMD  0x34
 
 #endif
-
